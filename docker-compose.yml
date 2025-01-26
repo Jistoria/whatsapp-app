@@ -1,0 +1,13 @@
+services:
+  whatsapp-bot:
+    build: .
+    container_name: nest-whatsapp-bot
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./wwebjs_auth:/root/.wwebjs_auth
+    environment:
+      - NODE_ENV=production
