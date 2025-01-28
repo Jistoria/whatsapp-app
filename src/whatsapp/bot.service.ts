@@ -33,6 +33,10 @@ export class BotService implements OnModuleInit {
       }
     });
 
+    this.client.on('authenticated', () => {
+      Logger.log('🔑 Sesión de WhatsApp autenticada');
+    });
+
     this.client.on('ready', () => {
       this.eventEmitter.emit('clientReady');
       Logger.log('WhatsApp client is ready');
@@ -52,7 +56,7 @@ export class BotService implements OnModuleInit {
     image: string,
     caption: string | undefined = undefined,
   ): Promise<void> {
-    const media = MessageMedia.fromFilePath(image);
+    const media = await MessageMedia.fromUrl(image);
     await this.client.sendMessage(phone, media, { caption });
   }
 
