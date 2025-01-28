@@ -35,11 +35,18 @@ export class BotService implements OnModuleInit {
 
     this.client.on('authenticated', () => {
       Logger.log('🔑 Sesión de WhatsApp autenticada');
+      console.log(this.client.info.pushname);
     });
 
     this.client.on('ready', () => {
       this.eventEmitter.emit('clientReady');
       Logger.log('WhatsApp client is ready');
+    });
+
+    this.client.on('auth_failure', () => {
+      console.log(
+        '❌ Error en la autenticación, la sesión puede haberse perdido.',
+      );
     });
 
     this.client.initialize().catch((error) => {
